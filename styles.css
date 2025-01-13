@@ -1,0 +1,390 @@
+body {
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.program-info {
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.program-info h1 {
+    font-size: 24px;
+    margin: 0 0 20px 0;
+    color: #2c2c2c;
+}
+
+.program-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+    gap: 10px;
+}
+
+.program-navigation button {
+    background-color: #f5f5f5;
+    color: #333;
+    border: 1px solid #ddd;
+    padding: 8px 16px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.program-navigation button:hover {
+    background-color: #e8e8e8;
+    border-color: #ccc;
+}
+
+#program-description {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 15px;
+}
+
+#program-description h2 {
+    margin: 0 0 15px 0;
+    color: #1a73e8;
+    font-size: 20px;
+}
+
+#program-description p {
+    margin: 8px 0;
+    line-height: 1.5;
+}
+
+.bug-container {
+    background-color: #fff;
+    position: relative;
+}
+
+.bug-container h2 {
+    font-size: 18px;
+    color: #333;
+    margin: 0 0 20px 0;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+#bug-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#bug-list li {
+    background-color: #fff;
+    margin: 8px 0;
+    padding: 12px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border: 1px solid #e0e0e0;
+    animation: bugAppear 0.3s ease-out;
+    transform-origin: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    opacity: 1;
+    transition: opacity 0.3s ease-in, transform 0.2s ease, box-shadow 0.2s ease;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+#bug-list li:hover {
+    background-color: #f8f9fa;
+    border-color: #d0d0d0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transform: translateX(2px);
+}
+
+.bug-number {
+    color: #666;
+    font-weight: 500;
+    min-width: 40px;
+    padding-right: 15px;
+    border-right: 2px solid #eee;
+    margin-right: 15px;
+}
+
+/* Status indicators */
+.bug-priority {
+    margin-left: 10px;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.priority-high {
+    background-color: #fef2f2;
+    color: #dc2626;
+}
+
+.priority-medium {
+    background-color: #fffbeb;
+    color: #d97706;
+}
+
+.priority-low {
+    background-color: #f0fdf4;
+    color: #16a34a;
+}
+
+@keyframes bugAppear {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.bug-squashed {
+    animation: squashBug 0.4s ease-out forwards !important;
+}
+
+@keyframes squashBug {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05) translateX(5px);
+        background-color: #f0f0f0;
+    }
+    100% {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+}
+
+.bug-banner {
+    background-color: #f0f7ff;
+    border: 1px solid #bae3ff;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #0066cc;
+    font-size: 15px;
+    animation: gentle-bounce 2s infinite;
+}
+
+.bug-banner span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+@keyframes gentle-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+.popup-message {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #fff;
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    color: #2c2c2c;
+    font-size: 15px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    border-left: 4px solid #1a73e8;
+}
+
+.popup-message.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.popup-message span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Add these new animations */
+@keyframes shake-normal {
+    0%, 100% { transform: translateX(0) rotate(0); }
+    25% { transform: translateX(-8px) rotate(-1deg); }
+    75% { transform: translateX(8px) rotate(1deg); }
+}
+
+@keyframes shake-violent {
+    0%, 100% { transform: translateX(0) rotate(0); }
+    25% { transform: translateX(-15px) rotate(-2deg); }
+    75% { transform: translateX(15px) rotate(2deg); }
+}
+
+.container.shake-normal {
+    animation: shake-normal 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+.container.shake-violent {
+    animation: shake-violent 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+.program-info.glitch {
+    animation: glitch 0.2s cubic-bezier(.36,.07,.19,.97) both;
+    animation-iteration-count: var(--glitch-iterations, 3);
+}
+
+/* Alternative glitch animation */
+@keyframes glitch-alt {
+    0% {
+        transform: translate(0) scale(1);
+    }
+    20% {
+        transform: translate(-4px, 4px) scale(1.05);
+    }
+    40% {
+        transform: translate(-4px, -4px) scale(0.95);
+    }
+    60% {
+        transform: translate(4px, 4px) scale(1.05);
+    }
+    80% {
+        transform: translate(4px, -4px) scale(0.95);
+    }
+    100% {
+        transform: translate(0) scale(1);
+    }
+}
+
+.glitch-alt {
+    animation: glitch-alt 0.3s ease forwards;
+}
+
+/* Flash effect variants */
+.flash.flash-red {
+    background-color: rgba(255, 0, 0, 0.15);
+}
+
+.flash.flash-blue {
+    background-color: rgba(0, 0, 255, 0.15);
+}
+
+.flash.flash-white {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Add the missing glitch animation */
+@keyframes glitch {
+    0% {
+        transform: translate(0);
+        filter: hue-rotate(0deg) brightness(100%);
+    }
+    20% {
+        transform: translate(-4px, 4px);
+        filter: hue-rotate(180deg) brightness(150%);
+    }
+    40% {
+        transform: translate(-4px, -4px);
+        opacity: 0.7;
+        filter: hue-rotate(-90deg) brightness(200%);
+    }
+    60% {
+        transform: translate(4px, 4px);
+        filter: hue-rotate(90deg) brightness(150%);
+    }
+    80% {
+        transform: translate(4px, -4px);
+        filter: hue-rotate(180deg) brightness(200%);
+    }
+    100% {
+        transform: translate(0);
+        filter: hue-rotate(0deg) brightness(100%);
+    }
+}
+
+/* Add base styles for flash overlay */
+.flash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: 9999;
+}
+
+.flash.active {
+    opacity: 1;
+}
+
+.bug-header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.bug-details {
+    margin-top: 10px;
+    padding-left: 55px;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.2s ease, max-height 0.2s ease;
+}
+
+/* Only show details when .show class is present */
+.bug-details.show {
+    opacity: 1;
+    max-height: 500px;
+}
+
+.error-message {
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 13px;
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    padding: 12px;
+    border-radius: 4px;
+    margin: 0;
+    white-space: pre-wrap;
+    overflow-x: auto;
+}
+
+/* Add some syntax highlighting */
+.error-message {
+    position: relative;
+    border-left: 3px solid #f14c4c;
+}
+
+.bug-text {
+    flex: 1;
+}
+
+/* Adjust the priority badge position */
+.bug-priority {
+    margin-left: 10px;
+}

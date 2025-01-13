@@ -195,7 +195,7 @@ class DebugSimulator {
                     <span class="bug-text">${bug.title}</span>
                     <span class="bug-priority priority-${priority}">${priority}</span>
                 </div>
-                <div class="bug-details">
+                <div class="bug-details show">
                     <pre class="error-message">${bug.error}</pre>
                 </div>
             </li>`;
@@ -206,17 +206,10 @@ class DebugSimulator {
             if (!li.hasListener) {
                 li.hasListener = true;
                 
-                // Left click to squash
+                // Left click to squash only
                 li.addEventListener('click', (e) => {
                     const bugTitle = li.querySelector('.bug-text').textContent;
                     this.squashBug(bugTitle, li);
-                });
-                
-                // Right click to toggle details
-                li.addEventListener('contextmenu', (e) => {
-                    e.preventDefault(); // Prevent default context menu
-                    const details = li.querySelector('.bug-details');
-                    details.classList.toggle('show');
                 });
             }
         });

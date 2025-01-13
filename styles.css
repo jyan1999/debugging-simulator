@@ -350,16 +350,9 @@ body {
 .bug-details {
     margin-top: 10px;
     padding-left: 55px;
-    opacity: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: opacity 0.2s ease, max-height 0.2s ease;
-}
-
-/* Only show details when .show class is present */
-.bug-details.show {
     opacity: 1;
-    max-height: 500px;
+    max-height: none;
+    overflow: visible;
 }
 
 .error-message {

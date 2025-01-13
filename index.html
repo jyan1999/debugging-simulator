@@ -8,6 +8,13 @@
 </head>
 <body>
     <div class="container">
+        <div class="victory-banner" id="victory-banner" style="display: none;">
+            <div class="victory-content">
+                <h2>🎉 Congratulations! 🎉</h2>
+                <p>You've squashed more than<span id="win-condition-count"></span> bugs! You have what it takes to be a software engineer!</p>
+                <div class="trophy">🏆</div>
+            </div>
+        </div>
         <div class="program-info">
             <h1>Debugging Simulator</h1>
             <div class="program-navigation">
@@ -15,6 +22,13 @@
                 <button id="next-program">→</button>
             </div>
             <div id="program-description"></div>
+        </div>
+        <div class="stats-container">
+            <div class="bug-counter">
+                <span class="counter-icon">🔨</span>
+                <span class="counter-label">Bugs Squashed:</span>
+                <span id="bugs-squashed">0</span>
+            </div>
         </div>
         <div class="bug-container">
             <h2>Current Bugs</h2>

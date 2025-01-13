@@ -5,6 +5,8 @@ class DebugSimulator {
         this.currentProgramIndex = 0;
         this.activeBugs = [];
         this.bugPriorities = new Map();
+        this.winCondition = 100;
+        document.getElementById('win-condition-count').textContent = this.winCondition;
         
         // Initialize DOM elements
         this.bugList = document.getElementById('bug-list');
@@ -45,6 +47,12 @@ class DebugSimulator {
         // Create flash overlay
         this.createFlashOverlay();
         
+        this.bugsSquashed = 0;
+        this.bugsSquashedElement = document.getElementById('bugs-squashed');
+        
+        this.victoryBanner = document.getElementById('victory-banner');
+        this.hasWon = false;
+        
         this.initialize();
     }
 
@@ -76,6 +84,19 @@ class DebugSimulator {
 
     // Update the bug refill logic
     refillBugs() {
+        // Don't refill if victory condition is met
+        if (this.hasWon) {
+            if (this.activeBugs.length === 0) {
+                this.showVictoryCelebration();
+            }
+            return;
+        }
+
+        if (this.bugsSquashed >= this.winCondition) {
+            // don't refill if they can win
+            return;
+        }
+
         const currentCount = this.activeBugs.length;
         const refillThreshold = this.getRandomBugCount(this.minBugs - 2, this.minBugs + 2);
         
@@ -115,6 +136,7 @@ class DebugSimulator {
             this.activeBugs = this.activeBugs.filter(bug => bug.title !== bugTitle);
             element.remove();
             this.updateBugNumbers();
+            this.updateBugsSquashed();
             this.refillBugs();
         }, 400);
     }
@@ -143,9 +165,10 @@ class DebugSimulator {
     }
 
     renderNewBugs(newBugs) {
-        const startIndex = this.activeBugs.length - newBugs.length;
+        // Get the current number of bugs in the list for correct indexing
+        const currentBugCount = this.bugList.querySelectorAll('li').length;
         const newBugsHTML = newBugs
-            .map((bug, i) => this.createBugElement(bug, startIndex + i))
+            .map((bug, i) => this.createBugElement(bug, currentBugCount + i))
             .join('');
         
         const temp = document.createElement('div');
@@ -373,6 +396,56 @@ class DebugSimulator {
                 resolve();
             }
         });
+    }
+
+    updateBugsSquashed() {
+        this.bugsSquashed++;
+        this.bugsSquashedElement.textContent = this.bugsSquashed;
+        this.bugsSquashedElement.classList.remove('counter-pop');
+        void this.bugsSquashedElement.offsetWidth;
+        this.bugsSquashedElement.classList.add('counter-pop');
+
+        // Check for victory condition
+        if (this.bugsSquashed >= this.winCondition && !this.hasWon && this.bugList.querySelectorAll('li').length === 0) {
+            this.showVictoryCelebration();
+        }
+    }
+
+    showVictoryCelebration() {
+        this.hasWon = true;
+        this.victoryBanner.style.display = 'flex';
+        this.createCelebrationParticles();
+    }
+
+    createCelebrationParticles() {
+        const emojis = ['✨', '🎉', '🎊', '⭐', '🌟'];
+        const colors = ['#FFD700', '#FF69B4', '#4169E1', '#32CD32', '#FF4500'];
+        
+        for (let i = 0; i < 50; i++) {
+            setTimeout(() => {
+                const particle = document.createElement('div');
+                particle.className = 'celebration-particle';
+                
+                // Randomly choose emoji or color star
+                if (Math.random() < 0.5) {
+                    particle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    particle.style.fontSize = '24px';
+                } else {
+                    particle.textContent = '★';
+                    particle.style.fontSize = '20px';
+                    particle.style.color = colors[Math.floor(Math.random() * colors.length)];
+                }
+                
+                // Random position and animation duration
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.animationDuration = (1 + Math.random()) + 's';
+                
+                document.body.appendChild(particle);
+                
+                // Remove particle after animation
+                setTimeout(() => particle.remove(), 1500);
+            }, i * 100);
+        }
     }
 }
 
